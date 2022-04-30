@@ -1,0 +1,11 @@
+{
+    "id"              : 1,
+    "clientFirstName" : "Billy",
+    "clientLastName"  : "Paul",
+    "cardNumber"      : 1980247972641,
+    "cardBalance"     : 200,
+    "currency"        : "CFC",
+    "cardDateFrom"    : "2022-04-05",
+    "cardDateTo"      : "2024-04-04",
+    "dateJoined"      : "2022-04-05"
+}
