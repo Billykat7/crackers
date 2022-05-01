@@ -52,6 +52,12 @@ Resources:
             TableName: !Ref ClientsTable
 
 Outputs:
-  CreateClientsAPI:
+  CreateCliensAPI:
     Description: "API Gateway Endpoint url for creating clients."
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Stage/clients"
+  CreateClientFunction:
+    Description: "Create client function ARN."
+    Value: !GetAtt CreateClientFunction.Arn
+  CreateClientFunctionIamRole:
+    Description: "Create client function IAM ARN."
+    Value: !GetAtt CreateClientFunctionRole.Arn
