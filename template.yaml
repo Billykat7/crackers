@@ -50,3 +50,8 @@ Resources:
       Policies:
         - DynamoDBReadPolicy:
             TableName: !Ref ClientsTable
+
+Outputs:
+  CreateClientsAPI:
+    Description: "API Gateway Endpoint url for creating clients."
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Stage/clients"
