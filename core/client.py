@@ -1,43 +1,43 @@
-import json
-import os
+import simplejson as json
+
+from boto3.dynamodb.conditions                  import Key
+
+from conn                                       import DBConnect
 
 
 def create_client(event, context):
 
-    # client = json.loads(event['body'])
+    client_i   = json.loads(event['body'])
+    db_data    = DBConnect().db_details()
+    dynamodb   = db_data['db_name']
+    table_name = db_data['table_name']
+    table      = dynamodb.Table(table_name)
+    response   = table.put_item(TableName = table_name, Item = client_i)
+    print(response)
 
     data = {
         'statusCode': 201,
         'headers': {},
-        'body': json.dumps({'message': 'Crackers clients created!'})
+        'body': json.dumps(response)
     }
-
-    print('CREATE CLIENT CALLED!')
 
     return data
 
 
 def get_client(event, context):
 
-    client = {
-        'id'              : 1,
-        'clientFirstName' : 'Billy',
-        'clientLastName'  : 'Paul',
-        'cardNumber'      : 1980247972641,
-        'cardBalance'     : 200,
-        'currency'        : 'CFC',
-        'cardDateFrom'    : '2022-04-05',
-        'cardDateTo'      : '2024-04-04',
-        'dateJoined'      : '2022-04-05'
-    }
+    db_data    = DBConnect().db_details()
+    dynamodb   = db_data['db_name']
+    table_name = db_data['table_name']
+    table      = dynamodb.Table(table_name)
+    client_id  = int(event['pathParameters']['id'])
+    response   = table.query(KeyConditionExpression=Key('id').eq(client_id))
 
     data = {
         'statusCode' : 200,
         'headers'    : {},
-        'body'       : json.dumps(client)
+        'body'       : json.dumps(response['Items'])
     }
-
-    print('GET CLIENT REQUESTED!')
 
     return data
     

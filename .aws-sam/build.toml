@@ -8,6 +8,6 @@ architecture = "x86_64"
 handler = "app.read_card_handler"
 manifest_hash = ""
 packagetype = "Zip"
-functions = ["CreateClientFunction", "ReadClientFunction", "ReadCardFunction"]
+functions = ["CreateClientFunction", "ReadClientFunction"]
 
 [layer_build_definitions]

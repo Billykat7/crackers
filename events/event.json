@@ -2,7 +2,7 @@
     "id"              : 1,
     "clientFirstName" : "Billy",
     "clientLastName"  : "Paul",
-    "cardNumber"      : 1980247972641,
+    "cardNumber"      : 1000000000001,
     "cardBalance"     : 200,
     "currency"        : "CFC",
     "cardDateFrom"    : "2022-04-05",

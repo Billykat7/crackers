@@ -1,0 +1,13 @@
+# HELP COMMANDS
+____________________________________________________________________________________________
+# AWS CLOUD - RUN
+
+sam init             --> To create the project
+sam build            --> To build the project
+sam deploy  --guided --> To deploy the project for the first time and set up default configs.
+sam deploy           --> To deploy with existing configs
+____________________________________________________________________________________________
+# LOCAL - RUN - DOCKER
+
+sam local invoke CreateClientFunction --event events/event.json
+sam local start-api --> Mimic AWS APIGateway

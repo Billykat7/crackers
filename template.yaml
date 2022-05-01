@@ -3,15 +3,27 @@ Transform: AWS::Serverless-2016-10-31
 Description: >
   crackers
 
-  Sample SAM Template for crackers
+Globals:
+  Function:
+    Runtime: python3.9
+    Timeout: 30
+    Environment:
+      Variables:
+        CLIENTS_TABLE: !Ref ClientsTable
 
 Resources:
+  ClientsTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: id
+        Type: Number
+
   CreateClientFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       CodeUri: core/
       Handler: client.create_client
-      Runtime: python3.9
       # APIGateway Used as a trigger of this function - Events
       Events:
         CreateClients:
@@ -19,13 +31,15 @@ Resources:
           Properties:
             Path: /clients
             Method: POST
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ClientsTable
 
   ReadClientFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       CodeUri: core/
       Handler: client.get_client
-      Runtime: python3.9
       # APIGateway Used as a trigger of this function - Events
       Events:
         ReadClients:
@@ -33,10 +47,6 @@ Resources:
           Properties:
             Path: /clients/{id}
             Method: GET
-
-  ReadCardFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Properties:
-      CodeUri: core/
-      Handler: app.read_card_handler
-      Runtime: python3.9
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref ClientsTable
